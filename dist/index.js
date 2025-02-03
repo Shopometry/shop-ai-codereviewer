@@ -64,7 +64,6 @@ function getPRDetails() {
             repo: repository.name,
             pull_number: number,
         });
-        console.log("Yura test Pull Request Response:", prResponse.data);
         return {
             owner: repository.owner.login,
             repo: repository.name,
@@ -159,6 +158,7 @@ function getAIResponse(prompt) {
             }
         }
         const queryConfig = getQueryConfig();
+        console.log("Query Config to openai:", queryConfig);
         try {
             const response = yield openai.chat.completions.create(Object.assign(Object.assign(Object.assign({}, queryConfig), (OPENAI_API_MODEL === "o3-mini"
                 ? { response_format: { type: "json_object" } }
@@ -169,6 +169,7 @@ function getAIResponse(prompt) {
                     },
                 ] }));
             const res = ((_b = (_a = response.choices[0].message) === null || _a === void 0 ? void 0 : _a.content) === null || _b === void 0 ? void 0 : _b.trim()) || "{}";
+            console.log("AI Response:", JSON.parse(res));
             return JSON.parse(res).reviews;
         }
         catch (error) {

@@ -33,7 +33,6 @@ async function getPRDetails(): Promise<PRDetails> {
     pull_number: number,
   });
 
-  console.log("Yura test Pull Request Response:", prResponse.data);
   return {
     owner: repository.owner.login,
     repo: repository.name,
@@ -138,6 +137,7 @@ async function getAIResponse(prompt: string): Promise<Array<{
   }
 
   const queryConfig = getQueryConfig();
+  console.log("Query Config to openai:", queryConfig);
 
   try {
     const response = await openai.chat.completions.create({
@@ -155,6 +155,7 @@ async function getAIResponse(prompt: string): Promise<Array<{
     });
 
     const res = response.choices[0].message?.content?.trim() || "{}";
+    console.log("AI Response:", JSON.parse(res));
     return JSON.parse(res).reviews;
   } catch (error) {
     console.error("Error:", error);
