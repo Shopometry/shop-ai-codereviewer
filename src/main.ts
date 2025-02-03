@@ -117,14 +117,27 @@ async function getAIResponse(prompt: string): Promise<Array<{
   lineNumber: string;
   reviewComment: string;
 }> | null> {
-  const queryConfig = {
-    model: OPENAI_API_MODEL,
-    temperature: 0.2,
-    max_completion_tokens: 1400,
-    top_p: 1,
-    frequency_penalty: 0,
-    presence_penalty: 0,
-  };
+
+  function getQueryConfig() {
+    if(OPENAI_API_MODEL === "o3-mini") {
+      return {
+        model: "o3-mini",
+        // o3-mini supports only a few options:
+        max_completion_tokens: 1400,
+      };
+    } else {
+        return {
+            model: OPENAI_API_MODEL,
+            temperature: 0.2,
+            max_tokens: 1400,
+            top_p: 1,
+            frequency_penalty: 0,
+            presence_penalty: 0
+        }
+    }
+  }
+
+  const queryConfig = getQueryConfig();
 
   try {
     const response = await openai.chat.completions.create({
