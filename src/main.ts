@@ -32,6 +32,8 @@ async function getPRDetails(): Promise<PRDetails> {
     repo: repository.name,
     pull_number: number,
   });
+
+  console.log("Yura test Pull Request Response:", prResponse.data);
   return {
     owner: repository.owner.login,
     repo: repository.name,
