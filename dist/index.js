@@ -113,6 +113,7 @@ function createPrompt(file, chunk, prDetails) {
 - Write the comment in GitHub Markdown format.
 - Use the given description only for the overall context and only comment the code.
 - IMPORTANT: NEVER suggest adding or update comments to the code.
+- IMPORTANT: NEVER check and suggest import paths updates.
 - IMPORTANT: NEVER check if created variables or functions are used somewhere or not.
 
 Review the following code diff in the file "${file.to}" and take the pull request title and description into account when writing the response.
