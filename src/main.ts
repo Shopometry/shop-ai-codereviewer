@@ -128,7 +128,7 @@ async function getAIResponse(prompt: string): Promise<Array<{
     } else {
         return {
             model: OPENAI_API_MODEL,
-            temperature: 0.2,
+            temperature: 1,
             max_completion_tokens: 1400,
             top_p: 1,
             frequency_penalty: 0,
