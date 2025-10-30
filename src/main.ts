@@ -126,14 +126,15 @@ async function getAIResponse(prompt: string): Promise<Array<{
         max_completion_tokens: 1400,
       };
     }
-    else if (OPENAI_API_MODEL === "gpt-4o") {
+    else if (OPENAI_API_MODEL === "gpt-4" || OPENAI_API_MODEL === "gpt-4o") {
       return {
-        model: "gpt-4o",
-        temperature: 0.7,
+        model: OPENAI_API_MODEL,
+        temperature: 0.4,  // Lower for more focused reviews
         max_completion_tokens: 4096,
-        top_p: 1,
-        frequency_penalty: 0.2,
-        presence_penalty: 0,
+        top_p: 0.95,  // Better focus
+        frequency_penalty: 0.3,  // Reduce repetition
+        presence_penalty: 0.2,  // Encourage variety
+        response_format: { type: "json_object" }  // Fix the JSON parsing error
       };
     }
     else {
