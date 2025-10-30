@@ -125,11 +125,22 @@ async function getAIResponse(prompt: string): Promise<Array<{
         // o3-mini supports only a few options:
         max_completion_tokens: 1400,
       };
-    } else {
+    }
+    else if (OPENAI_API_MODEL === "gpt-4o") {
+      return {
+        model: "gpt-4o",
+        temperature: 0.7,
+        max_completion_tokens: 4096,
+        top_p: 1,
+        frequency_penalty: 0.2,
+        presence_penalty: 0,
+      };
+    }
+    else {
         return {
             model: OPENAI_API_MODEL,
             temperature: 1,
-            max_completion_tokens: 1400,
+            max_completion_tokens: 3000,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0

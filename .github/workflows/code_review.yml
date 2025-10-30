@@ -16,5 +16,7 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          OPENAI_API_MODEL: "o3-mini"
+          OPENAI_API_MODEL: "gpt-4o"
           exclude: "yarn.lock,dist/**"
+          reviewPrompt: |
+            You are an expert code reviewer. For the following code diff, provide detailed, constructive feedback, highlight design issues, potential bugs, style improvement opportunities, and any best practices not followed. Write clear, actionable comments for **every notable point you can find**.
