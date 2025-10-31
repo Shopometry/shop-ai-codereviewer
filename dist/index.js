@@ -105,7 +105,7 @@ function analyzeCode(parsedDiff, prDetails) {
         return comments;
     });
 }
-function createPrompt(file: File, chunk: Chunk, prDetails: PRDetails): string {
+function createPrompt(file, chunk, prDetails) {
   return `Your task is to review pull requests for CRITICAL issues only.
 
 CRITICAL RULES:
