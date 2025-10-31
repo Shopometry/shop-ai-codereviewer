@@ -150,11 +150,11 @@ function getAIResponse(prompt) {
             else if (OPENAI_API_MODEL === "gpt-4" || OPENAI_API_MODEL === "gpt-4o") {
                 return {
                     model: OPENAI_API_MODEL,
-                    temperature: 0.2,  // Lower for more focused reviews
+                    temperature: 0.1,  // Lower for more focused reviews
                     max_completion_tokens: 2048,
-                    top_p: 0.85,  // Focus on top responses
-                    frequency_penalty: 0.5,  // Reduce repetition
-                    presence_penalty: 0.4,  // Neutral on new topics
+                    top_p: 0.8,  // Focus on top responses
+                    frequency_penalty: 0.6,  // Reduce repetition
+                    presence_penalty: 0.5,  // Neutral on new topics
                     response_format: { type: "json_object" }  // Fix the JSON parsing error
                 };
             }

@@ -80,20 +80,55 @@ async function analyzeCode(
 }
 
 function createPrompt(file: File, chunk: Chunk, prDetails: PRDetails): string {
-  return `Your task is to review pull requests. Instructions:
-- Provide the response in following JSON format:  {"reviews": [{"lineNumber":  <line_number>, "reviewComment": "<review comment>"}]}
-- Do not give positive comments or compliments.
-- Provide comments and suggestions ONLY if there is something to improve, otherwise "reviews" should be an empty array.
-- Write the comment in GitHub Markdown format.
-- Use the given description only for the overall context and only comment the code.
-- IMPORTANT: NEVER suggest adding or update comments to the code.
-- IMPORTANT: NEVER check and suggest import paths updates.
-- IMPORTANT: NEVER check if created variables or functions are used somewhere or not.
-Do NOT report:
-- Minor style suggestions
-- Trivial refactoring opportunities
-- Optional improvements
-Focus only on issues that MUST be fixed
+  return `Your task is to review pull requests for CRITICAL issues only.
+
+CRITICAL RULES:
+- ONLY report bugs that would cause: crashes, data loss, security vulnerabilities, or severe performance issues
+- If there are no critical issues, return empty array: {"reviews": []}
+- Response format: {"reviews": [{"lineNumber": <line_number>, "reviewComment": "<review comment>"}]}
+- Write comments in GitHub Markdown format
+- Be extremely selective - when in doubt, do NOT comment
+
+NEVER comment on:
+- Code style, formatting, or organization
+- Adding or updating comments
+- Import paths or organization
+- Variable/function naming conventions
+- Whether variables/functions are used elsewhere
+- Minor refactoring or code duplication
+- Missing TypeScript types
+- Console.log or debug statements
+- Missing error handling (unless causes crashes)
+- Performance optimizations (unless severe impact)
+- Missing input validation (unless critical security risk)
+- Async/await vs promises style choices
+- React component structure or hooks usage
+- CSS or styling issues
+
+ONLY comment on CRITICAL issues:
+
+Backend Critical Issues:
+- SQL injection vulnerabilities
+- NoSQL injection attacks
+- Authentication/authorization bypasses
+- Exposed API keys, passwords, or secrets
+- Unvalidated file uploads leading to RCE
+- CORS misconfigurations exposing sensitive data
+- Race conditions in database transactions
+- Memory leaks in server processes
+- Infinite loops or recursion without exit
+- Null/undefined access causing server crashes
+
+Frontend Critical Issues:
+- XSS (Cross-Site Scripting) vulnerabilities
+- Exposed sensitive data in client code
+- Infinite loops crashing the browser
+- Memory leaks in React components (uncleared intervals/listeners)
+- Null/undefined access causing app crashes
+- localStorage/sessionStorage security issues with sensitive data
+- Broken authentication flows
+- API calls exposing secrets in request headers/body
+- Critical accessibility issues (keyboard traps)
 
 Review the following code diff in the file "${
     file.to
@@ -134,11 +169,11 @@ async function getAIResponse(prompt: string): Promise<Array<{
     else if (OPENAI_API_MODEL === "gpt-4" || OPENAI_API_MODEL === "gpt-4o") {
       return {
         model: OPENAI_API_MODEL,
-        temperature: 0.2,  // Lower for more focused reviews
+        temperature: 0.1,  // Lower for more focused reviews
         max_completion_tokens: 2048,
-        top_p: 0.85,  // Focus on top responses
-        frequency_penalty: 0.5,  // Reduce repetition
-        presence_penalty: 0.4,  // Neutral on new topics
+        top_p: 0.8,  // Focus on top responses
+        frequency_penalty: 0.6,  // Reduce repetition
+        presence_penalty: 0.5,  // Neutral on new topics
         response_format: { type: "json_object" }  // Fix the JSON parsing error
       };
     }
