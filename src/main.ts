@@ -176,7 +176,7 @@ async function getAIResponse(prompt: string): Promise<Array<{
             presence_penalty: 0.5,  // Neutral on new topics
         };
     }
-    else if (OPENAI_API_MODEL === "gpt-4") {
+    else if (OPENAI_API_MODEL === "gpt-4o") {
         return {
             model: OPENAI_API_MODEL,
             temperature: 0.1,  // Lower for more focused reviews
