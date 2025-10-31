@@ -180,7 +180,7 @@ async function getAIResponse(prompt: string): Promise<Array<{
     else {
       return {
         model: OPENAI_API_MODEL,
-        temperature: 0.1,
+        temperature: 1,
         max_completion_tokens: 1500,
         top_p: 0.8,
         frequency_penalty: 0.6,
