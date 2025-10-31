@@ -166,27 +166,37 @@ async function getAIResponse(prompt: string): Promise<Array<{
         max_completion_tokens: 1400,
       };
     }
-    else if (OPENAI_API_MODEL === "gpt-4" || OPENAI_API_MODEL === "gpt-4o") {
-      return {
-        model: OPENAI_API_MODEL,
-        temperature: 0.1,  // Lower for more focused reviews
-        max_completion_tokens: 2048,
-        top_p: 0.8,  // Focus on top responses
-        frequency_penalty: 0.6,  // Reduce repetition
-        presence_penalty: 0.5,  // Neutral on new topics
-        response_format: { type: "json_object" }  // Fix the JSON parsing error
-      };
+    else if (OPENAI_API_MODEL === "gpt-4") {
+        return {
+            model: OPENAI_API_MODEL,
+            temperature: 0.1,  // Lower for more focused reviews
+            max_completion_tokens: 2048,
+            top_p: 0.8,  // Focus on top responses
+            frequency_penalty: 0.6,  // Reduce repetition
+            presence_penalty: 0.5,  // Neutral on new topics
+        };
+    }
+    else if (OPENAI_API_MODEL === "gpt-4") {
+        return {
+            model: OPENAI_API_MODEL,
+            temperature: 0.1,  // Lower for more focused reviews
+            max_completion_tokens: 2048,
+            top_p: 0.8,  // Focus on top responses
+            frequency_penalty: 0.6,  // Reduce repetition
+            presence_penalty: 0.5,  // Neutral on new topics
+            response_format: { type: "json_object" }  // Fix the JSON parsing error
+        };
     }
     else {
       return {
-        model: OPENAI_API_MODEL,
-        temperature: 1,
-        max_completion_tokens: 1500,
-        top_p: 0.8,
-        frequency_penalty: 0.6,
-        presence_penalty: 0.5
+          model: OPENAI_API_MODEL,
+          temperature: 1,
+          max_completion_tokens: 3000,
+          top_p: 1,
+          frequency_penalty: 0,
+          presence_penalty: 0
       };
-    }
+}
   }
 
   const queryConfig = getQueryConfig();
