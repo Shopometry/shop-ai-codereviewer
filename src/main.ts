@@ -84,8 +84,7 @@ function createPrompt(file: File, chunk: Chunk, prDetails: PRDetails): string {
 
 CRITICAL RULES:
 - ONLY report bugs that would cause: crashes, data loss, security vulnerabilities, or severe performance issues
-- If there are no critical issues, return empty array: {"reviews": []}
-- Response format: {"reviews": [{"lineNumber": <line_number>, "reviewComment": "<review comment>"}]}
+- Provide the response in following JSON format:  {"reviews": [{"lineNumber":  <line_number>, "reviewComment": "<review comment>"}]}
 - Write comments in GitHub Markdown format
 - Be extremely selective - when in doubt, do NOT comment
 
