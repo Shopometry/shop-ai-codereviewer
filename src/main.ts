@@ -89,6 +89,11 @@ function createPrompt(file: File, chunk: Chunk, prDetails: PRDetails): string {
 - IMPORTANT: NEVER suggest adding or update comments to the code.
 - IMPORTANT: NEVER check and suggest import paths updates.
 - IMPORTANT: NEVER check if created variables or functions are used somewhere or not.
+Do NOT report:
+- Minor style suggestions
+- Trivial refactoring opportunities
+- Optional improvements
+Focus only on issues that MUST be fixed
 
 Review the following code diff in the file "${
     file.to
@@ -129,11 +134,11 @@ async function getAIResponse(prompt: string): Promise<Array<{
     else if (OPENAI_API_MODEL === "gpt-4" || OPENAI_API_MODEL === "gpt-4o") {
       return {
         model: OPENAI_API_MODEL,
-        temperature: 0.4,  // Lower for more focused reviews
-        max_completion_tokens: 4096,
-        top_p: 0.95,  // Better focus
-        frequency_penalty: 0.3,  // Reduce repetition
-        presence_penalty: 0.2,  // Encourage variety
+        temperature: 0.2,  // Lower for more focused reviews
+        max_completion_tokens: 2048,
+        top_p: 0.85,  // Focus on top responses
+        frequency_penalty: 0.5,  // Reduce repetition
+        presence_penalty: 0.4,  // Neutral on new topics
         response_format: { type: "json_object" }  // Fix the JSON parsing error
       };
     }
